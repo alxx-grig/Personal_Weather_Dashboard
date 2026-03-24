@@ -7,7 +7,7 @@ function updateClock(){
 
   document.getElementById('time').textContent = `${hours}:${minutes}:${seconds}`; // sets the hours, minutes and seconds by updating HTML
 
-  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }; // specifies the actual format for the date
+  const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' }; // specifies the actual format for the date
   document.getElementById('date').textContent = now.toLocaleDateString('en-US', options); // using the 'now' object, it sets the date with the specified format and updtaes HTML
 }
 
@@ -38,7 +38,7 @@ async function getWeather() { // async is a keyword that is used when we don't r
     let forecastHTML = "";
 
     // Loop through the next 5 days (starting at index 1 for tomorrow)
-    for(let i = 1; i <= 5; i++){
+    for(let i = 1; i <= 6; i++){
         const date = new Date(dailyWeather.time[i]);
         const dayName = dayNames[date.getUTCDay()];
         const maxTemp = Math.round(dailyWeather.temperature_2m_max[i]);
