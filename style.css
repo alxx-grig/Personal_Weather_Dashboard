@@ -1,0 +1,11 @@
+html{
+    font-size: 62.5%; /*This is like a universal constant for 1px*/                                                                                             
+}
+main{
+    margin: 0 1rem; /* Reduced from 6rem to fit phone screens */
+    margin-bottom: 6rem;
+}
+body{
+    height: fit-content;
+    background-color: white;
+}
