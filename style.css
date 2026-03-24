@@ -45,14 +45,14 @@ body{
 
 #time{
     font-family: 'DM Serif Display', serif;
-    font-size: clamp(7.2rem, 12vw, 16rem);
-    line-height: 1;
+    font-size: 30rem;
+    line-height: .8;
     letter-spacing: -.2rem;
     color: var(--text-primary);
 }
 
 #date{
-    font-size: clamp(1.4rem, 2vw, 1.8rem);
+    font-size: 7rem;
     font-weight: 300;
     color: var(--text-secondary);
     margin-top: 1.2rem;
@@ -80,7 +80,7 @@ body{
     border-radius: 2rem;
     padding: 2.8rem;
     min-height: 20rem;
-    font-size: clamp(1.4rem, 2vw, 1.8rem);
+    font-size: 4rem;
 
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -90,11 +90,6 @@ body{
     box-shadow: 0 1rem 2rem rgba(0,0,0,0.05);
 }
 
-/* Portrait orientation */
-@media (orientation: portrait) {
-    body { padding: 3rem 2.4rem; }
-    #widgets { grid-template-columns: 1fr; }
-}
 /*========================================= this is for the forecast bar =========================================*/
 #forecast-bar {
     grid-column: 1 / -1; /* This makes it span the full width */
@@ -114,11 +109,11 @@ body{
 .day-name {
     font-weight: 500;
     text-transform: uppercase;
-    font-size: 1.2rem;
+    font-size: 4rem;
     color: var(--text-secondary);
 }
 
 .day-temp {
-    font-size: 1.8rem;
+    font-size: 3rem;
     font-weight: 400;
 }
