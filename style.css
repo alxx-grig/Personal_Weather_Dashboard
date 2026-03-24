@@ -33,6 +33,8 @@ body{
     display: flex;
     flex-direction: column;
     gap: 4rem;
+
+    animation: fadeIn 1.5s ease-out;
 }
 
 /* Clock section */
@@ -66,6 +68,11 @@ body{
     margin-bottom: 6rem;
 }
 
+@keyframes fadeIn{
+    from { opacity: 0; transform: translateY(1rem); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
 .widget{
     background: var(--widget-bg);
     border: .1rem solid var(--widget-border);
@@ -73,10 +80,17 @@ body{
     padding: 2.8rem;
     min-height: 20rem;
     font-size: clamp(1.4rem, 2vw, 1.8rem);
+
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.widget:hover {
+    transform: translateY(-.5rem);
+    box-shadow: 0 1rem 2rem rgba(0,0,0,0.05);
 }
 
 /* Portrait orientation */
 @media (orientation: portrait) {
-    body { padding: 30px 24px; }
+    body { padding: 3rem 2.4rem; }
     #widgets { grid-template-columns: 1fr; }
 }
