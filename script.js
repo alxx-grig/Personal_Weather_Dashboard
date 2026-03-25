@@ -19,7 +19,7 @@ async function getWeather(){ // async is a keyword that is used when we don't re
     const longitude = -81.20615364774744;
 
     const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&temperature_unit=fahrenheit&wind_speed_unit=mph&daily=temperature_2m_max,temperature_2m_min`;
-    /*https://api.open-meteo.com/v1/forecast?latitude=28.586779934551355&longitude=-81.20615364774744&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&temperature_unit=fahrenheit&wind_speed_unit=mph&daily=temperature_2m_max,temperature_2m_min`;*/
+    // URL for reference: https://api.open-meteo.com/v1/forecast?latitude=28.586779934551355&longitude=-81.20615364774744&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&temperature_unit=fahrenheit&wind_speed_unit=mph&daily=temperature_2m_max,temperature_2m_min
 
 
     try{
@@ -30,10 +30,10 @@ async function getWeather(){ // async is a keyword that is used when we don't re
 
         const dataRecieved = await response.json(); // parsing the string that we got to an actual javascript object
 
-        const currentWeather = dataRecieved.current;
-        const humidity = dataRecieved.current ? dataRecieved.current.relative_humidity_2m : "N/A";
-        const dailyWeather = dataRecieved.daily;
-        const weatherCodes = {
+        const currentWeather = dataRecieved.current; // Current Weather
+        const humidity = dataRecieved.current ? dataRecieved.current.relative_humidity_2m : "N/A"; // Humidity level
+        const dailyWeather = dataRecieved.daily; // For Forecast
+        const weatherCodes = { // Translating weather codes that Open-Meteo sends
             0: "Clear sky",
             1: "Mainly clear",
             2: "Partly cloudy",
@@ -49,7 +49,7 @@ async function getWeather(){ // async is a keyword that is used when we don't re
             80: "Slight rain showers",
             95: "Thunderstorm"
         }
-        const weatherTips = {
+        const weatherTips = { // Little messages for the description
             0: "A day where the sky isn't plotting a surprise pool party.",
             1: "The sky has a few clouds, likely just for aesthetic purposes and to give you false hope of shade.",
             2: "The sky has a few clouds, likely just for aesthetic purposes and to give you false hope of shade.",
@@ -65,10 +65,11 @@ async function getWeather(){ // async is a keyword that is used when we don't re
             80: "The sky is a little indecisive today and taking it out on everyone... grab an umbrella for the road.",
             95: "AAAAAAAAAAAAHHHHHHHHHHHHHHHHHHHHH!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
         }
-        const description = weatherCodes[currentWeather.weather_code] || "Unknown condition";
-        const tips = weatherTips[currentWeather.weather_code] || "I got nothing for yah...";
+        const description = weatherCodes[currentWeather.weather_code] || "Unknown condition"; // Description, If unknown pops up, go into URL and see what the current weather code is
+        const tips = weatherTips[currentWeather.weather_code] || "I got nothing for yah..."; // After that, add a description to 'weatherTips'
     
 
+        // Injecting HTML for the weather widget
         document.getElementById('weather-widget').innerHTML = `
                 <p> Current Weather Stats: </p>
                 <div class="current-day-stats">${Math.round(currentWeather.temperature_2m)}°F</div>
@@ -77,6 +78,7 @@ async function getWeather(){ // async is a keyword that is used when we don't re
                 <div class="current-day-stats">Humidity: ${humidity}%</p>
             `;
 
+        // Injecting HTML for the recommendations widget
         document.getElementById('recommendations-widget').innerHTML = `
                 <p>Weather Description:</p>
                 <p>${description}</p>
@@ -104,6 +106,7 @@ async function getWeather(){ // async is a keyword that is used when we don't re
             `;
         }
 
+        // Injecting the HTML onto the forecast bar
         document.getElementById('forecast-bar').innerHTML = forecastHTML;
     }
     catch(error){
@@ -118,20 +121,20 @@ async function getShuttleData(){
     const targetUrl = "https://ucf.transloc.com/Services/JSONPRelay.svc/GetStopArrivalTimes?apiKey=8882812681&stopIds=54&version=2";
 
     try{
-        const response = await fetch('http://localhost:3001');
-        const data = await response.json();
+        const response = await fetch('http://localhost:3001'); // send a request to the proxxy server for information
+        const data = await response.json(); // Wait for the json file and store it in 'data'
 
-        const route2Data = data.find(item => item.RouteDescription === "Route 2");
+        const route2Data = data.find(item => item.RouteDescription === "Route 2"); // Out of all of the information, search specifically for the Route 2 info
 
-        if(route2Data && route2Data.Times && route2Data.Times.length > 0){
+        if(route2Data && route2Data.Times && route2Data.Times.length > 0){ // if the data exists and shuttles are running, keep going!
             const nextEntry = route2Data.Times.find(t => !t.IsDeparted);
 
-            if(nextEntry){
+            if(nextEntry){ // If nextEntry exists
                 const allEntries = route2Data.Times.filter(t => !t.IsDeparted);
                 const secondEntry = allEntries[1]; // second bus if it exists
 
                 const getDisplayTime = (entry) => {
-                    const minutesAway = Math.floor(entry.Seconds / 60);
+                    const minutesAway = Math.floor(entry.Seconds / 60); // Convert seconds to minutes
                     if (entry.Seconds <= 120) return `Shuttle is Arriving!🚨`;
                     else if (entry.Seconds <= 300) return `Get Ready, Shuttle arrives in ${minutesAway} min`;
                     else return `Shuttle is ${minutesAway} min away...`;
@@ -144,6 +147,7 @@ async function getShuttleData(){
                     </div>
                 ` : '';
 
+                // Injecting the HTML into the shuttle-routes-widget
                 document.getElementById('shuttle-routes-widget').innerHTML = `
                     <p>Route 2 @ Boardwalk Stop</p>
                     <div>
@@ -152,6 +156,7 @@ async function getShuttleData(){
                     ${secondBusHTML}
                 `;
             }
+            // If nextEntry doesn't exist
             else{
                 document.getElementById('shuttle-routes-widget').innerHTML = `
                     <p>Route 2 @ Boardwalk Stop</p>
@@ -159,6 +164,7 @@ async function getShuttleData(){
                 `;
             }
         }
+        // If there are no bus routes active
         else{
             document.getElementById('shuttle-routes-widget').innerHTML = `
                 <p>Route 2 @ Boardwalk Stop</p>
