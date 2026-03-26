@@ -194,6 +194,9 @@ async function getParkingData() {
         const response = await fetch("http://localhost:3001/parking");
         const data = await response.json();
 
+        // 1. Define the specific list of garages you want to display
+        const targetGarages = ["Garage A", "Garage B", "Garage C", "Garage D", "Garage H", "Garage I"];
+
         const renderGarage = (item) => {
             if (!item || !item.location || !item.location.counts) return '';
             
@@ -203,7 +206,6 @@ async function getParkingData() {
             const total = stats.total;
             const available = stats.available;
             
-            // Calculate percentage based on the data provided
             const percent = Math.round((occupied / total) * 100);
             
             let statusColor = "var(--text-primary)";
@@ -219,14 +221,16 @@ async function getParkingData() {
             `;
         };
 
-        let mostGaragesHTML = ``;
-        for(let i = 0; i < 6; i++){
-            mostGaragesHTML += renderGarage(data[i]);
-        }
+        // 2. Instead of a for loop, use .map() to find each specific garage from your list
+        const mostGaragesHTML = targetGarages.map(garageName => {
+            // Find the object in the API data where the location name matches our list
+            const garageData = data.find(item => item.location.name === garageName);
+            return renderGarage(garageData);
+        }).join(''); // Combine the array of HTML strings into one long string
 
         document.getElementById('ucf-parking-widget').innerHTML = `
-            <p id="parking-title">All Campus Parking</p>
-            <div id="parking-list" style="max-height: 400px; overflow-y: auto;">
+            <p id="parking-title">Main Campus Parking</p>
+            <div id="parking-list">
                 ${mostGaragesHTML}
             </div>
         `;
