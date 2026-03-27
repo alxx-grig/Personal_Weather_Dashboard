@@ -194,7 +194,7 @@ async function getParkingData() {
         const response = await fetch("http://localhost:3001/parking");
         const data = await response.json();
 
-        // 1. Define the specific list of garages you want to display
+        // Wanted Parking garages
         const targetGarages = ["Garage A", "Garage B", "Garage C", "Garage D", "Garage H", "Garage I"];
 
         const renderGarage = (item) => {
@@ -221,7 +221,7 @@ async function getParkingData() {
             `;
         };
 
-        // 2. Instead of a for loop, use .map() to find each specific garage from your list
+        // Using .map() to find each specific garage from the list
         const mostGaragesHTML = targetGarages.map(garageName => {
             // Find the object in the API data where the location name matches our list
             const garageData = data.find(item => item.location.name === garageName);

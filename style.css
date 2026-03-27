@@ -109,7 +109,8 @@ body{
 
 #forecast-bar #forecast-title{
     font-family: 'DM Serif Display';
-    font-size: 4rem;
+    font-size: 3.6rem;
+    margin-bottom: -4rem;
 }
 
 .forecast-day{
@@ -144,12 +145,12 @@ body{
     margin-bottom: 1rem;
 }
 #shuttle-routes-widget div{
-    font-size: 5.5rem;
+    font-size: 4rem;
     font-family: 'DM Serif Display';
     line-height: 1;
 }
 #shuttle-routes-widget #next-shuttle{
-    font-size: 4rem;
+    font-size: 3rem;
     color: var(--text-secondary);
     margin-top: 1rem;
     font-family: 'DM Serif Display';
