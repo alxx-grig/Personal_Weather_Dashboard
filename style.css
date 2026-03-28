@@ -24,8 +24,8 @@ body{
     color: var(--text-primary);
     font-family: 'DM Sans', sans-serif;
     min-height: 100vh;
-    padding: 2rem;
     display: flex;
+    padding-bottom: 8rem;
 }
 
 #main-app-section{
@@ -62,12 +62,10 @@ body{
 }
 
 /* Widgets grid */
-#widgets{
+#widgets {
     display: grid;
-    /* This creates exactly 2 equal columns */
-    grid-template-columns: 1fr 1fr; 
+    grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
     gap: 2rem;
-    margin-bottom: 6rem;
 }
 
 @keyframes fadeIn{
@@ -91,20 +89,97 @@ body{
 }
 
 /*========================================= Current Weather Widget =========================================*/
-#weather-widget p{
-    font-size: 3.5rem;
-    font-family: 'DM Serif Display';
+#weather-widget {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 3rem;
 }
 
-#weather-widget .current-day-stats{
-    font-size: 4rem;
+.weather-header p {
+    font-size: 2.2rem !important;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 2rem;
+}
+
+/* Big Temperature */
+.weather-main {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.main-temp {
+    font-family: 'DM Serif Display';
+    font-size: 10rem;
+    line-height: 1;
+}
+
+.main-desc {
+    display: flex;
+    flex-direction: column;
+}
+
+.condition-text {
+    font-size: 3rem;
+    font-weight: 500;
+}
+
+.high-low {
+    font-size: 1.8rem;
+    color: var(--text-secondary);
+}
+
+/* Bottom Grid for Stats */
+.weather-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--widget-border);
+    padding-top: 2rem;
+    gap: 1rem;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-label {
+    font-size: 1.4rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.stat-value {
+    font-size: 2.4rem;
+    font-weight: 400;
+}
+
+.rain-prob .stat-value {
+    color: #3b82f6; /* Signature blue for rain */
 }
 
 /*========================================= Forecast Bar =========================================*/
-#forecast-bar{
-    text-align: center;
-    width: fit-content;
-    margin-top: 8rem;
+.dailyWeather {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+#forecast-bar {
+    display: flex;
+    flex-direction: row; /* Horizontal layout */
+    gap: 3rem;
+    background: var(--widget-bg);
+    padding: 2rem 4rem;
+    border-radius: 5rem;
+    border: .1rem solid var(--widget-border);
+    margin-bottom: -3rem;
 }
 
 #forecast-bar #forecast-title{
@@ -113,17 +188,14 @@ body{
     margin-bottom: -4rem;
 }
 
-.forecast-day{
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    margin: 5rem 0;
+.forecast-day {
+    align-items: center;
 }
 
 .day-name{
     font-weight: 500;
     text-transform: uppercase;
-    font-size: 4rem;
+    font-size: 5rem;
     color: var(--text-secondary);
     margin-bottom: -1rem;
 }
@@ -131,11 +203,13 @@ body{
 .day-temp{
     font-size: 3rem;
     font-weight: 400;
-    margin-bottom: -1rem;
+    margin-bottom: -.5rem;
+    display: block;
 }
 
 .day-rain{
     font-size: 2rem;
+    display: block;
 }
 
 /*========================================= Shuttle Widget =========================================*/
@@ -201,4 +275,46 @@ body{
     font-size: 1.6rem;
     color: var(--text-secondary);
     margin-top: 0.5rem;
+}
+/*========================================= Parking Widget =========================================*/
+.solar-container {
+    margin-top: 2rem;
+    padding: 1rem 0;
+}
+
+.solar-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.4rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.solar-status {
+    font-family: 'DM Serif Display';
+    color: var(--text-primary);
+    font-size: 1.8rem;
+}
+
+.solar-track {
+    position: relative;
+    height: 0.4rem;
+    background: linear-gradient(to right, #ff9e2c, #f5f2ec, #4a90e2);
+    border-radius: 1rem;
+}
+
+.solar-progress {
+    height: 100%;
+    background: var(--text-primary);
+    opacity: 0.2;
+    border-radius: 1rem;
+}
+
+.sun-marker {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2.2rem;
+    transition: left 1s ease-in-out;
 }

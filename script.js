@@ -24,8 +24,8 @@ async function getWeather(){ // async is a keyword that is used when we don't re
     const latitude = 28.586779934551355; // coordinates of where we are
     const longitude = -81.20615364774744;
 
-    const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&hourly=precipitation_probability&daily=temperature_2m_max,temperature_2m_min,weather_code,precipitation_probability_max&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto`;
-    // URL for reference: https://api.open-meteo.com/v1/forecast?latitude=28.586779934551355&longitude=-81.20615364774744&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&hourly=precipitation_probability&daily=temperature_2m_max,temperature_2m_min,weather_code,precipitation_probability_max&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&hourly=precipitation_probability&daily=sunrise,sunset,temperature_2m_max,temperature_2m_min,weather_code,precipitation_probability_max&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto`;
+    // URL for reference: https://api.open-meteo.com/v1/forecast?latitude=28.586779934551355&longitude=-81.20615364774744&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&hourly=precipitation_probability&daily=sunrise,sunset,temperature_2m_max,temperature_2m_min,weather_code,precipitation_probability_max&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto
 
 
     try{
@@ -46,57 +46,51 @@ async function getWeather(){ // async is a keyword that is used when we don't re
             3: "Overcast",
             45: "Fog",
             48: "Depositing rime fog",
-            51: "Light drizzle",
-            53: "Moderate drizzle",
-            55: "Dense drizzle",
-            61: "Slight rain",
-            63: "Moderate rain",
-            65: "Heavy rain",
-            80: "Slight rain showers",
-            95: "Thunderstorm"
-        }
-        const weatherTips = { // Little messages for the description
-            0: "Don't worry, the sky isn't plotting a surprise pool party.",
-            1: "The sky has a few clouds, likely just for aesthetic purposes.",
-            2: "The sky has a few clouds, likely just for aesthetic purposes.",
-            3: "It’s gray, moody, and looks like a Victorian novel out there, still good for walking though.",
-            45: "Render distance is set to 'Very Low' today...",
-            48: "Render distance is set to 'Very Low' today...",
-            51: "It's not quite raining, but you'll still end up looking like a wet dog by the time you walk 50 feet. Grab an Umbrella just in case!",
-            53: "It's not quite raining, but you'll still end up looking like a wet dog by the time you walk 50 feet. Grab an Umbrella just in case!",
-            55: "It's not quite raining, but you'll still end up looking like a wet dog by the time you walk 50 feet. Grab an Umbrella just in case!",
-            61: "THE SKY IS LEAKING, GET AN UMBRELLA.",
-            63: "THE SKY IS LEAKING, GET AN UMBRELLA.",
-            65: "It's Raining cats and dogs out there am I right?..... Grab an Umbrella..",
-            80: "The sky is a little indecisive today and taking it out on everyone... grab an umbrella for the road.",
-            95: "AAAAAAAAAAAAHHHHHHHHHHHHHHHHHHHHH!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+            51: "Light drizzle: Take Umbrella",
+            53: "Moderate drizzle: Take Umbrella",
+            55: "Dense drizzle: Take Umbrella",
+            61: "Slight rain: Take Umbrella",
+            63: "Moderate rain: Take Umbrella",
+            65: "Heavy rain: Take Umbrella",
+            80: "Slight rain showers: Take Umbrella",
+            95: "Thunderstorm: Take Umbrella"
         }
         const description = weatherCodes[currentWeather.weather_code] || "Unknown condition"; // Description, If unknown pops up, go into URL and see what the current weather code is
-        const tips = weatherTips[currentWeather.weather_code] || "I got nothing for yah..."; // After that, add a description to 'weatherTips'
-        const currentRainChance = dataRecieved.hourly.precipitation_probability[0] || 'N/A';
+        const currentRainChance = dataRecieved.hourly.precipitation_probability[0];
 
         // Injecting HTML for the weather widget
         document.getElementById('weather-widget').innerHTML = `
-                <p> Current Weather Stats: </p>
-                <div class="current-day-stats">${Math.round(currentWeather.temperature_2m)}°F</div>
-                <div class="current-day-stats">High: ${Math.round(dailyWeather.temperature_2m_max[0])}°F</div>
-                <div class="current-day-stats">Wind Speed: ${currentWeather.wind_speed_10m} mph</div>
-                <div class="current-day-stats">Humidity: ${humidity}%</p>
-                <div class="current-day-stats" style="color: #3b82f6;">Hourly Chance of Rain: ${currentRainChance}%</div>
-            `;
-
-        // Injecting HTML for the recommendations widget
-        document.getElementById('recommendations-widget').innerHTML = `
-                <p>Weather Description:</p>
-                <p>${description}</p>
-                <p>${tips}</p>
+            <div class="weather-header">
+                <p>Current Conditions</p>
+            </div>
+            <div class="weather-main">
+                <div class="main-temp">${Math.round(currentWeather.temperature_2m)}°</div>
+                <div class="main-desc">
+                    <span class="condition-text">${description}</span>
+                    <span class="high-low">High: ${Math.round(dailyWeather.temperature_2m_max[0])}° • Low: ${Math.round(dailyWeather.temperature_2m_min[0])}°</span>
+                </div>
+            </div>
+            <div class="weather-grid">
+                <div class="stat-item">
+                    <span class="stat-label">Wind</span>
+                    <span class="stat-value">${currentWeather.wind_speed_10m} <small>mph</small></span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Humidity</span>
+                    <span class="stat-value">${humidity}%</span>
+                </div>
+                <div class="stat-item rain-prob">
+                    <span class="stat-label">Rain</span>
+                    <span class="stat-value">${currentRainChance}%</span>
+                </div>
+            </div>
         `;
+
+        updateSolarTracker(dataRecieved);
 
         // Array of day names to map the dates
         const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-        let forecastHTML = `
-                <p id="forecast-title">Week at a Glance</p>
-        `;
+        let forecastHTML = ``;
 
         // Loop through the next 6 days (starting at index 1 for tomorrow)
         for(let i = 1; i <= 6; i++){
@@ -128,19 +122,20 @@ async function getWeather(){ // async is a keyword that is used when we don't re
 
 /*========================================================== Shuttle Function ==========================================================*/
 async function getShuttleData(){
-    const targetUrl = "https://ucf.transloc.com/Services/JSONPRelay.svc/GetStopArrivalTimes?apiKey=8882812681&stopIds=54&version=2";
-
     try{
         const response = await fetch('http://localhost:3001/shuttle'); // send a request to the proxxy server for information
         const data = await response.json(); // Wait for the json file and store it in 'data'
 
         const route2Data = data.find(item => item.RouteDescription === "Route 2"); // Out of all of the information, search specifically for the Route 2 info
 
+        // A valid entry must not be departed AND have a positive, reasonable arrival time (under 2 hours)
+        const isValidEntry = (t) => !t.IsDeparted && t.Seconds > 0 && t.Seconds < 7200;
+
         if(route2Data && route2Data.Times && route2Data.Times.length > 0){ // if the data exists and shuttles are running, keep going!
-            const nextEntry = route2Data.Times.find(t => !t.IsDeparted);
+            const nextEntry = route2Data.Times.find(t => isValidEntry(t));
 
             if(nextEntry){ // If nextEntry exists
-                const allEntries = route2Data.Times.filter(t => !t.IsDeparted);
+                const allEntries = route2Data.Times.filter(t => isValidEntry(t));
                 const secondEntry = allEntries[1]; // second bus if it exists
 
                 const getDisplayTime = (entry) => {
@@ -238,6 +233,45 @@ async function getParkingData() {
         console.error("Parking Fetch Error:", error);
         document.getElementById('ucf-parking-widget').innerHTML = "Failed to load parking data.";
     }
+}
+
+
+/*========================================================== Solar Tracker ==========================================================*/
+function updateSolarTracker(data){
+    const existingSolar = document.querySelector('.solar-container');
+    if(existingSolar){
+        existingSolar.remove();
+    }
+    
+    const now = new Date();
+    const sunrise = new Date(data.daily.sunrise[0]);
+    const sunset = new Date(data.daily.sunset[0]);
+    
+    // Calculate total daylight minutes and minutes passed since sunrise
+    const totalDaylight = (sunset - sunrise) / (1000 * 60);
+    const minutesPassed = (now - sunrise) / (1000 * 60);
+    
+    // Calculate percentage (clamped between 0 and 100)
+    let percent = Math.min(Math.max((minutesPassed / totalDaylight) * 100, 0), 100);
+    
+    // If it's night time, we'll show a "Night" state
+    const isNight = now < sunrise || now > sunset;
+    const sunIcon = isNight ? '🌙' : '☀️';
+    const statusText = isNight ? "Moonlight" : "Daylight";
+
+    document.getElementById('weather-widget').innerHTML += `
+        <div class="solar-container">
+            <div class="solar-labels">
+                <span>${sunrise.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+                <span class="solar-status">${statusText}</span>
+                <span>${sunset.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+            </div>
+            <div class="solar-track">
+                <div class="solar-progress" style="width: ${percent}%"></div>
+                <div class="sun-marker" style="left: ${percent}%">${sunIcon}</div>
+            </div>
+        </div>
+    `;
 }
 
 // Run the functions!
