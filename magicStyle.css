@@ -1,0 +1,126 @@
+:root {
+    --black: #000000;
+    --inferno: #B20000;
+    --charcoal: #5F5F5F;
+    --mint: #F1FFFA;
+}
+
+body {
+    background-color: var(--black);
+    color: var(--mint);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Keeps it dashboard-style */
+}
+
+/* Header & Styled Add Button */
+#mtg-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem;
+    background: black;
+}
+
+.add-player-btn {
+    background: var(--inferno);
+    color: white;
+    border: none;
+    padding: 1rem 2.5rem;
+    border-radius: 0.8rem;
+    font-size: 1.6rem;
+    cursor: pointer;
+    font-weight: bold;
+    transition: transform 0.2s, background 0.2s;
+}
+
+.add-player-btn:hover {
+    background: #ff0000;
+    transform: scale(1.05);
+}
+
+/* Dynamic Grid Scaling */
+#player-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    padding: 2rem;
+    justify-content: center;
+    align-content: center;
+    flex-grow: 1;
+}
+
+.player-card {
+    position: relative; /* For the watermark */
+    background: var(--charcoal);
+    border: 2px solid #333;
+    border-radius: 2rem;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 280px;
+    flex: 1 1 300px; /* Allows them to shrink and grow */
+    transition: all 0.3s ease;
+}
+
+/* Watermark Logic */
+.player-card.defeated {
+    opacity: 0.5;
+    filter: grayscale(0.8);
+}
+
+.player-card.defeated::after {
+    content: "DEFEATED";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-30deg);
+    font-size: 5rem;
+    font-weight: 900;
+    color: var(--inferno);
+    border: 5px solid var(--inferno);
+    padding: 1rem;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.life-total {
+    font-family: 'DM Serif Display';
+    font-size: 7rem;
+    text-align: center;
+    color: var(--mint);
+}
+
+.life-btn {
+    height: 6rem;
+    border: none;
+    border-radius: 1rem;
+    font-size: 2.5rem;
+    cursor: pointer;
+    color: white;
+}
+
+.nav-btn {
+    text-decoration: none;
+    background: var(--charcoal);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1.2rem 2.5rem;
+    border-radius: 5rem;
+    color: var(--mint);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 1.4rem;
+    transition: all 0.3s ease;
+}
+
+.nav-btn:hover {
+    background: var(--inferno);
+    transform: translateY(-0.2rem);
+}
+
+.minus { background-color: var(--black); }
+.plus { background-color: var(--inferno); }

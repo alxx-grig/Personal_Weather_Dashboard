@@ -195,13 +195,13 @@ body{
 .day-name{
     font-weight: 500;
     text-transform: uppercase;
-    font-size: 5rem;
+    font-size: 3.5rem;
     color: var(--text-secondary);
     margin-bottom: -1rem;
 }
 
 .day-temp{
-    font-size: 3rem;
+    font-size: 2.5rem;
     font-weight: 400;
     margin-bottom: -.5rem;
     display: block;
@@ -276,7 +276,7 @@ body{
     color: var(--text-secondary);
     margin-top: 0.5rem;
 }
-/*========================================= Parking Widget =========================================*/
+/*========================================= Solar Tracker =========================================*/
 .solar-container {
     margin-top: 2rem;
     padding: 1rem 0;
@@ -299,8 +299,8 @@ body{
 
 .solar-track {
     position: relative;
-    height: 0.4rem;
-    background: linear-gradient(to right, #ff9e2c, #f5f2ec, #4a90e2);
+    height: 1.2rem;
+    background: linear-gradient(to right, #ff9c2a, #ffffff, rgb(44, 44, 255));
     border-radius: 1rem;
 }
 
@@ -317,4 +317,39 @@ body{
     transform: translate(-50%, -50%);
     font-size: 2.2rem;
     transition: left 1s ease-in-out;
+}
+/*========================================= Magic Counter Widget =========================================*/
+.magic-link-wrapper{
+    text-decoration: none;
+    display: block; /* Ensures it takes up space */
+    position: absolute;
+    z-index: 100; /* Keeps it above other elements */
+}
+.magic-life-counter{
+    background-image: url(images/mtg-logo.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-color: black;
+    height: 8rem;
+    width: 8rem;
+    border-radius: 1.5rem;
+    position: absolute;
+    margin-left: 3rem;
+    margin-top: 3rem;
+
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.magic-life-counter:hover{
+    cursor: pointer;
+    transform: translateY(-.5rem);
+    box-shadow: 0 1rem 2rem rgba(0,0,0,0.05);
+}
+.magic-life-counter:active{
+    opacity: .85;
+}
+.magic-life-counter a{
+    height: 8rem;
+    width: 8rem;
+    border-radius: 1.5rem;
 }

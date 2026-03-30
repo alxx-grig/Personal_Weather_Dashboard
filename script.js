@@ -208,7 +208,7 @@ async function getParkingData() {
             else if (percent > 75) statusColor = "#f77f00"; 
 
             return `
-                <div class="garage-info">
+                <div class="garage-info" style="text-align: center;">
                     <span class="garage-name">${name}</span>
                     <span class="garage-percent" style="color: ${statusColor}">${percent}% Full</span>
                     <p class="spots-left">${available} spots remaining</p>
