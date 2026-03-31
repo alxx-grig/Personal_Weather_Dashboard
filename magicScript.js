@@ -85,7 +85,11 @@ function updateCmdr(id, amount) {
     checkStatus(id);
 }
 
-function checkStatus(id) {
+function checkStatus(id){
+    const defeatedMessage = {
+        0: 'Defeated'
+    }
+
     const life = parseInt(document.getElementById(`life-${id}`).innerText);
     const cmdr = parseInt(document.getElementById(`cmdr-${id}`).innerText);
     const card = document.getElementById(`card-${id}`);

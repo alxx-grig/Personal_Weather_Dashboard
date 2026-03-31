@@ -5,13 +5,21 @@
     --mint: #F1FFFA;
 }
 
-body {
+body{
     background-color: var(--black);
     color: var(--mint);
     font-family: 'DM Sans', sans-serif;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
+
+    background-image: url(images/mtg-logo.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-size: 1500px;
+
 }
 
 /* Header & Styled Add Button */
@@ -40,6 +48,11 @@ body {
     transform: scale(1.05);
 }
 
+.nav-btn{
+    scale: 1.5;
+    border-radius: 8px;
+}
+
 /* Dynamic Grid Scaling */
 #player-grid{
     display: flex;
@@ -49,19 +62,26 @@ body {
     justify-content: center;
     align-content: center;
     flex-grow: 1;
+
+    animation: fadeIn 1.5s ease-out;
+}
+
+@keyframes fadeIn{
+    from { opacity: 0; transform: translateY(1rem); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .player-card{
     position: relative; /* For the watermark */
-    background: var(--charcoal);
+    background: rgb(95, 95, 95, .9);
     border: 2px solid #333;
     border-radius: 2rem;
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    min-width: 280px;
-    flex: 1 1 300px; /* Allows them to shrink and grow */
+    flex: 1 1 250px; /* Allows them to shrink and grow */
+
     transition: all 0.3s ease;
 }
 
@@ -113,9 +133,9 @@ body {
     background-position: center;
     background-size: cover;
     background-color: whitesmoke;
-    height: 5rem;
-    width: 5rem;
-    border-radius: 1.5rem;
+    height: 70px;
+    width: 70px;
+    border-radius: 15px;
     margin-left: 3rem;
     margin-top: 3rem;
 
