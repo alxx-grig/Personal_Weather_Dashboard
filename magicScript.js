@@ -1,5 +1,6 @@
 let playerCount = 4;
 let holdTimer = null;
+let startingPlayerLife = 40
 const grid = document.getElementById('player-grid');
 
 function createPlayerCards(){
@@ -16,7 +17,7 @@ function createPlayerCard(id) {
     card.id = `card-${id}`;
     card.innerHTML = `
         <h2 style="color: var(--mint); text-align: center;">Player ${id}</h2>
-        <div class="life-total" id="life-${id}">40</div>
+        <div class="life-total" id="life-${id}">${startingPlayerLife}</div>
         <div class="btn-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
             <button class="life-btn minus" 
                 onmousedown="startHold(${id}, -1)" 
@@ -74,27 +75,63 @@ function updateLife(id, amount) {
 function updateCmdr(id, amount) {
     const cmdrEl = document.getElementById(`cmdr-${id}`);
     const lifeEl = document.getElementById(`life-${id}`);
+    
     let oldCmdrVal = parseInt(cmdrEl.innerText);
     let newCmdrVal = oldCmdrVal + amount;
 
-    if (newCmdrVal >= 0) {
-        cmdrEl.innerText = newCmdrVal;
+    // Only proceed if within the legal 0-21 range
+    if(newCmdrVal >= 0 && newCmdrVal <= 21){
         let currentLife = parseInt(lifeEl.innerText);
-        lifeEl.innerText = Math.max(0, currentLife - amount);
+        
+        // Check if life is at 0 before subtracting the damage
+        if (amount < 0 && currentLife === 0) {
+            // Do nothing to Life, just update the Commander number
+            cmdrEl.innerText = newCmdrVal;
+        } else {
+            // Normal behavior: Update both
+            cmdrEl.innerText = newCmdrVal;
+            lifeEl.innerText = Math.max(0, currentLife - amount);
+        }
     }
     checkStatus(id);
 }
 
 function checkStatus(id){
     const defeatedMessage = {
-        0: 'Defeated'
+        0: "Defeated",
+        1: "One Shot",
+        2: "Exiled",
+        3: "Eliminated",
+        4: "Destroyed",
+        5: "Neutralized",
+        6: "Finished",
+        7: "Cooked",
+        8: "Wiped",
+        9: "laughtered",
+        10: "Obliterated",
+        11: "Seg Faulted",
+        12: "Dog Water",
+        13: "Removed",
+        14: "O(n!) Runtime",
+        15: "Folded",
+        16: "Took the L",
+        17: "Done For",
+        18: "Terminated",
+        19: "Tapped Out"
     }
 
     const life = parseInt(document.getElementById(`life-${id}`).innerText);
     const cmdr = parseInt(document.getElementById(`cmdr-${id}`).innerText);
     const card = document.getElementById(`card-${id}`);
-    if (life <= 0 || cmdr >= 21) card.classList.add('defeated');
-    else card.classList.remove('defeated');
+    const randNum = Math.floor(Math.random() * 20);
+    
+    if((life <= 0 || cmdr >= 21) && !(card.classList.contains('defeated'))){
+        card.style.setProperty('--defeat-msg', `"${defeatedMessage[randNum]}"`);
+        card.classList.add('defeated');
+    } 
+    else if(life > 0 && cmdr < 21){
+        card.classList.remove('defeated');
+    }
 }
 
 // Existing Controls

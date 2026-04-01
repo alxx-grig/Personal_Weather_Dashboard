@@ -97,7 +97,7 @@ body{
 }
 
 .player-card.defeated::after{
-    content: "DEFEATED";
+    content: var(--defeat-msg, "Defeated");
     position: absolute;
     top: 50%;
     left: 50%;
@@ -109,6 +109,7 @@ body{
     padding: 1rem;
     z-index: 10;
     pointer-events: none;
+    text-align: center;
 }
 
 .life-total{
