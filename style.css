@@ -12,7 +12,7 @@
     --text-secondary: #8A8880;
     --widget-bg: #FFFFFF;
     --widget-border: rgba(0, 0, 0, 0.07);
-    --accent: #b2fffe;
+    --accent: #d7fffe;
 }
 html{
     font-size: 62.5%; /*This is like a universal constant for 1px*/                                                                                             

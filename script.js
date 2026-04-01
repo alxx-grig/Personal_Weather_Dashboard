@@ -10,7 +10,7 @@ function updateClock(){
     hours = hours % 12 || 12;
 
     document.getElementById('time').innerHTML = `
-            <span>${hours}:${minutes}:${seconds}</span><span style="font-size: 6rem">${ampm}</span>
+            <span>${hours.toString().padStart(2, '0')}:${minutes}:${seconds}</span><span style="font-size: 6rem">${ampm}</span>
 
     `; // sets the hours, minutes and seconds by updating HTML
 
