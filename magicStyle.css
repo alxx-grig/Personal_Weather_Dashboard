@@ -157,4 +157,4 @@ body{
 }
 
 .minus { background-color: var(--black); }
-.plus { background-color: var(--inferno); }
+.plus { background-color: rgb(150, 1, 1); }

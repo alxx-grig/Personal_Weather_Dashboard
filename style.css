@@ -29,11 +29,11 @@ body{
 }
 
 #main-app-section{
-    max-width: 140rem;
+    max-width: 180rem;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 4rem;
+    gap: 6rem;
 
     animation: fadeIn 1.5s ease-out;
 }
@@ -65,7 +65,7 @@ body{
 #widgets{
     display: grid;
     grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
-    gap: 3rem;
+    gap: 4rem;
     max-width: 160rem; /* Increased from 140rem */
     margin: 0 auto;
 }
@@ -79,8 +79,8 @@ body{
     background: var(--widget-bg);
     border: .1rem solid var(--widget-border);
     border-radius: 2rem;
-    padding: 4rem;
-    min-height: 35rem;
+    padding: 5rem;
+    min-height: 50rem;
     
 
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -117,27 +117,27 @@ body{
 
 .main-temp{
     font-family: 'DM Serif Display';
-    font-size: 10rem;
+    font-size: 13rem;
     line-height: 1;
 }
 
-.main-desc {
+.main-desc{
     display: flex;
     flex-direction: column;
 }
 
-.condition-text {
-    font-size: 3rem;
+.condition-text{
+    font-size: 3.8rem;
     font-weight: 500;
 }
 
-.high-low {
-    font-size: 1.8rem;
+.high-low{
+    font-size: 2rem;
     color: var(--text-secondary);
 }
 
 /* Bottom Grid for Stats */
-.weather-grid {
+.weather-grid{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     border-top: 1px solid var(--widget-border);
@@ -145,20 +145,20 @@ body{
     gap: 1rem;
 }
 
-.stat-item {
+.stat-item{
     display: flex;
     flex-direction: column;
 }
 
-.stat-label {
-    font-size: 1.4rem;
+.stat-label{
+    font-size: 1.8rem;
     color: var(--text-secondary);
     text-transform: uppercase;
     font-weight: 500;
 }
 
-.stat-value {
-    font-size: 2.4rem;
+.stat-value{
+    font-size: 3rem;
     font-weight: 400;
 }
 
@@ -174,15 +174,17 @@ body{
     margin-top: 2rem;
 }
 
-#forecast-bar {
+#forecast-bar{
     display: flex;
     flex-direction: row; /* Horizontal layout */
-    gap: 3rem;
+    gap: 5rem;
     background: var(--widget-bg);
     padding: 2rem 4rem;
     border-radius: 5rem;
     border: .1rem solid var(--widget-border);
     margin-bottom: -3rem;
+    width: 95%;
+    justify-content: center;
 
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -245,7 +247,11 @@ body{
     padding: 0;
 }
 #parking-title{
-    padding: 2rem 2rem 0 2rem;
+    padding: 2.5rem 2.5rem 0 2rem;
+    font-size: 2.5rem !important;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
 }
 #ucf-parking-widget #parking-title{
     font-size: 2.2rem;
