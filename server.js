@@ -9,23 +9,31 @@ const server = http.createServer((req, res) => {
 
     let targetUrl = '';
 
-    if (req.url === '/shuttle') {
+    if(req.url === '/shuttle'){
         targetUrl = 'https://ucf.transloc.com/Services/JSONPRelay.svc/GetStopArrivalTimes?apiKey=8882812681&stopIds=54&version=2';
-    } else if (req.url === '/parking') {
+    }
+    else if(req.url === '/parking'){
         targetUrl = 'https://flow.my.ucf.edu/upstream/parking_widget';
-    } else if (req.url === '/system') {
+    }
+    else if(req.url === '/weather'){
+        const latitude = 28.586779934551355; // coordinates of where we are
+        const longitude = -81.20615364774744;
+        targetUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&hourly=precipitation_probability&daily=sunrise,sunset,temperature_2m_max,temperature_2m_min,weather_code,precipitation_probability_max&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto`;
+        // URL for reference: https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&hourly=precipitation_probability&daily=sunrise,sunset,temperature_2m_max,temperature_2m_min,weather_code,precipitation_probability_max&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto
+    }
+    else if(req.url === '/system'){
 
         // Get local IP address (first non-internal IPv4)
         const nets = os.networkInterfaces();
         let localIP = 'N/A';
-        for (const name of Object.keys(nets)) {
-            for (const net of nets[name]) {
-                if (net.family === 'IPv4' && !net.internal) {
+        for(const name of Object.keys(nets)){
+            for(const net of nets[name]){
+                if(net.family === 'IPv4' && !net.internal){
                     localIP = net.address;
                     break;
                 }
             }
-            if (localIP !== 'N/A') break;
+            if(localIP !== 'N/A') break;
         }
 
         // Run all exec commands in parallel using a counter
@@ -33,7 +41,7 @@ const server = http.createServer((req, res) => {
         let pending = 3;
 
         const done = () => {
-            if (--pending === 0) {
+            if(--pending === 0){
                 const stats = {
                     cpu: Math.round(os.loadavg()[0] * 100 / os.cpus().length),
                     ramUsed: Math.round((os.totalmem() - os.freemem()) / 1024 / 1024),
@@ -56,10 +64,11 @@ const server = http.createServer((req, res) => {
 
         // Disk Usage — parses "df -h /" output for used/total/percent
         exec("df -h / | awk 'NR==2 {print $2, $3, $5}'", (err, stdout) => {
-            if (stdout) {
+            if(stdout){
                 const parts = stdout.trim().split(' ');
                 results.disk = { total: parts[0], used: parts[1], percent: parts[2] };
-            } else {
+            }
+            else{
                 results.disk = { total: 'N/A', used: 'N/A', percent: 'N/A' };
             }
             done();
@@ -68,23 +77,24 @@ const server = http.createServer((req, res) => {
         // Throttle Status — 0x0 means healthy, anything else means trouble
         // Bit flags: 0=under-voltage, 1=freq-capped, 2=throttled, 16=under-voltage occurred, etc.
         exec('vcgencmd get_throttled', (err, stdout) => {
-            if (stdout) {
+            if(stdout){
                 const raw = stdout.replace('throttled=', '').trim();
                 const val = parseInt(raw, 16);
 
-                if (val === 0) {
+                if(val === 0){
                     results.throttled = { status: 'HEALTHY', code: raw, detail: 'No issues detected' };
                 } else {
                     const flags = [];
-                    if (val & 0x1)  flags.push('Under-voltage!');
-                    if (val & 0x2)  flags.push('Freq capped');
-                    if (val & 0x4)  flags.push('Throttled!');
-                    if (val & 0x10000) flags.push('Under-voltage occurred');
-                    if (val & 0x20000) flags.push('Freq cap occurred');
-                    if (val & 0x40000) flags.push('Throttle occurred');
+                    if(val & 0x1)  flags.push('Under-voltage!');
+                    if(val & 0x2)  flags.push('Freq capped');
+                    if(val & 0x4)  flags.push('Throttled!');
+                    if(val & 0x10000) flags.push('Under-voltage occurred');
+                    if(val & 0x20000) flags.push('Freq cap occurred');
+                    if(val & 0x40000) flags.push('Throttle occurred');
                     results.throttled = { status: 'WARNING', code: raw, detail: flags.join(', ') };
                 }
-            } else {
+            }
+            else{
                 results.throttled = { status: 'N/A', code: 'N/A', detail: 'vcgencmd unavailable' };
             }
             done();
@@ -92,9 +102,10 @@ const server = http.createServer((req, res) => {
 
         return; // Don't fall through to https.get()
 
-    } else {
+    }
+    else{
         res.writeHead(404);
-        return res.end(JSON.stringify({ error: 'Route not found. Use /shuttle, /parking, or /system' }));
+        return res.end(JSON.stringify({ error: 'Route not found. Use /shuttle, /parking, /system, or /weather' }));
     }
 
     // Only /shuttle and /parking reach this point
