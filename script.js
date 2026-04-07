@@ -65,6 +65,7 @@ function updateClock(){
 async function getWeather(){ // async is a keyword that is used when we don't really want a function to activate instantly and is waiting for another condition
     const latitude = 28.586779934551355; // coordinates of where we are
     const longitude = -81.20615364774744;
+    
 
     const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&hourly=precipitation_probability&daily=sunrise,sunset,temperature_2m_max,temperature_2m_min,weather_code,precipitation_probability_max&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto`;
     // URL for reference: https://api.open-meteo.com/v1/forecast?latitude=28.586779934551355&longitude=-81.20615364774744&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&hourly=precipitation_probability&daily=sunrise,sunset,temperature_2m_max,temperature_2m_min,weather_code,precipitation_probability_max&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto
@@ -110,6 +111,7 @@ async function getWeather(){ // async is a keyword that is used when we don't re
                 <div class="main-desc">
                     <span class="condition-text">${description}</span>
                     <span class="high-low">High: ${Math.round(dailyWeather.temperature_2m_max[0])}° • Low: ${Math.round(dailyWeather.temperature_2m_min[0])}°</span>
+                    
                 </div>
             </div>
             <div class="weather-grid">
@@ -246,13 +248,15 @@ async function getParkingData() {
             const percent = Math.round((occupied / total) * 100);
             
             let statusColor = "var(--text-primary)";
-            if (percent > 90) statusColor = "#d62828"; 
-            else if (percent > 75) statusColor = "#f77f00"; 
+            if (percent > 90) statusColor = "#D62828";
+            else if (percent > 75) statusColor = "#FFB347";
+            else statusColor = "#07ffc5";
 
             return `
                 <div class="garage-info" style="text-align: center;">
+                    <div class="garage-percentage-bar" style="background-color: ${statusColor}"></div>
                     <span class="garage-name">${name}</span>
-                    <span class="garage-percent" style="color: ${statusColor}">${percent}% Full</span>
+                    <span class="garage-percent">${percent}% Full</span>
                     <p class="spots-left">${available} spots remaining</p>
                 </div>
             `;
@@ -309,12 +313,26 @@ function updateSolarTracker(data){
                 <span>${sunset.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
             </div>
             <div class="solar-track">
-                <div class="solar-progress" style="width: ${percent}%"></div>
                 <div class="sun-marker" style="left: ${percent}%">${sunIcon}</div>
             </div>
         </div>
     `;
 }
+
+/*========================================================== Auxiliary Functions ==========================================================*/
+
+function getUpdateTime(){
+    const lastUpdated = new Date(); // To see when we last updated the weather
+
+    let hours = lastUpdated.getHours(); // .padStart() function adds whatever character is specified at the beginning of the string if it doesn't have the required number of characters: in this case 2
+    const minutes = lastUpdated.getMinutes().toString().padStart(2, '0');
+
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12 || 12;
+
+    return `<span class="last-weather-update">Last Updated: ${hours}:${minutes} ${ampm}</span>`;
+}
+
 
 // Run the functions!
 updateClock();

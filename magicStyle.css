@@ -4,7 +4,6 @@
     --charcoal: #5F5F5F;
     --mint: #F1FFFA;
 }
-
 body{
     background-color: var(--black);
     color: var(--mint);
@@ -18,84 +17,122 @@ body{
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    background-size: 1500px;
-
 }
-
-/* Header & Styled Add Button */
+/*========================================= Header & Styled Add Button =========================================*/
 #mtg-controls{
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 2rem;
-    background: black;
 }
-
 .add-player-btn{
     background: var(--inferno);
     color: white;
     border: none;
-    padding: 1rem 2.5rem;
+    padding: .6rem 1.5rem;
     border-radius: 0.8rem;
-    font-size: 1.6rem;
+    font-size: 1.2rem;
     cursor: pointer;
     font-weight: bold;
     transition: transform 0.2s, background 0.2s;
 }
-
 .add-player-btn:hover{
     background: #ff0000;
     transform: scale(1.05);
 }
-
 .nav-btn{
-    scale: 1.5;
+    scale: 1.3;
     border-radius: 8px;
 }
-
-/* Dynamic Grid Scaling */
+/*========================================= Dynamic Grid Scaling =========================================*/
 #player-grid{
     display: flex;
     flex-wrap: wrap;
     gap: 1.5rem;
-    padding: 2rem;
+    padding: 0 2rem 2rem 2rem;
     justify-content: center;
     align-content: center;
     flex-grow: 1;
 
     animation: fadeIn 1.5s ease-out;
 }
-
 @keyframes fadeIn{
     from { opacity: 0; transform: translateY(1rem); }
     to { opacity: 1; transform: translateY(0); }
 }
-
 .player-card{
     position: relative; /* For the watermark */
     background: rgb(95, 95, 95, .9);
     border: 2px solid #333;
     border-radius: 2rem;
-    padding: 1.5rem;
+    padding: .5rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    flex: 1 1 250px; /* Allows them to shrink and grow */
+    flex: 1 1 150px; /* Allows them to shrink and grow */
+    min-width: 15%;
 
     transition: all 0.3s ease;
 }
-
 .player-card:hover{
     transform: translateY(-.2rem);
     box-shadow: 0 1rem 2rem rgba(0,0,0,0.05);
 }
-
-/* Watermark Logic */
+/*========================================= Player Title =========================================*/
+.player-title{
+    color: var(--mint);
+    text-align: center;
+    font-size: 1rem;
+}
+/*========================================= Life Buttons =========================================*/
+.btn-group{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+}
+.minus{
+    background-color: var(--black);
+}
+.plus{
+    background-color: rgb(150, 1, 1);
+}
+.life-btn{
+    width: 100%;                        /* fills its grid cell */
+    height: 2em;                        /* height scales with font-size */
+    border: none;
+    border-radius: 1rem;
+    font-size: clamp(1rem, 2vw, 1.8rem); /* scales with viewport */
+    cursor: pointer;
+    color: white;
+}
+/*========================================= Commander Damage =========================================*/
+.cmdr-section{
+    margin-top: 15px;
+    border-top: 1px solid #444;
+    padding-top: 10px;
+    text-align: center;
+}
+.cmdr-damg-bttns{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5%;
+}
+.cmdr-damg-bttns button{
+    padding: 0 1em;               /* em so it scales with font-size */
+    font-size: clamp(0.8rem, 1.5vw, 1.2rem);
+}
+.cmdr-damg-bttns button:hover{
+    cursor: pointer;
+}
+.cmdr-count{
+    font-size: clamp(1rem, 2vw, 2rem);
+}
+/*========================================= Watermark Logic =========================================*/
 .player-card.defeated{
     opacity: 0.5;
     filter: grayscale(0.8);
 }
-
 .player-card.defeated::after{
     content: var(--defeat-msg, "Defeated");
     position: absolute;
@@ -111,27 +148,18 @@ body{
     pointer-events: none;
     text-align: center;
 }
-
+/*========================================= Life Total =========================================*/
 .life-total{
     font-family: 'DM Serif Display';
-    font-size: 7rem;
+    font-size: clamp(2rem, 6vw, 5rem);  /* scales with viewport width */
     text-align: center;
     color: var(--mint);
 }
-
-.life-btn{
-    height: 6rem;
-    border: none;
-    border-radius: 1rem;
-    font-size: 2.5rem;
-    cursor: pointer;
-    color: white;
-}
-
+/*========================================= Nav =========================================*/
 .nav-link-wrapper{
     text-decoration: none;
-    display: block; /* Ensures it takes up space */
-    z-index: 100; /* Keeps it above other elements */
+    display: block;
+    z-index: 100;
 }
 .dashboard{
     background-image: url(images/weather-app-thick-line-filled-dark-colors-icons-for-personal-and-commercial-use-free-vector.jpg);
@@ -139,9 +167,9 @@ body{
     background-position: center;
     background-size: cover;
     background-color: whitesmoke;
-    height: 70px;
-    width: 70px;
-    border-radius: 15px;
+    height: 45px;
+    width: 45px;
+    border-radius: 10px;
     margin-left: -9px;
     margin-top: -9px;
 
@@ -155,6 +183,3 @@ body{
 .dashboard:active{
     opacity: .85;
 }
-
-.minus { background-color: var(--black); }
-.plus { background-color: rgb(150, 1, 1); }

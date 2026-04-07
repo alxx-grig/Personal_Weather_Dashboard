@@ -16,9 +16,9 @@ function createPlayerCard(id) {
     card.className = 'player-card';
     card.id = `card-${id}`;
     card.innerHTML = `
-        <h2 style="color: var(--mint); text-align: center;">Player ${id}</h2>
+        <h2 class="player-title">Player ${id}</h2>
         <div class="life-total" id="life-${id}">${startingPlayerLife}</div>
-        <div class="btn-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <div class="btn-group">
             <button class="life-btn minus" 
                 onmousedown="startHold(${id}, -1)" 
                 onmouseup="stopHold()" 
@@ -28,20 +28,14 @@ function createPlayerCard(id) {
                 onmouseup="stopHold()" 
                 onmouseleave="stopHold()">+</button>
         </div>
-        <div style="margin-top: 15px; border-top: 1px solid #444; padding-top: 10px; text-align: center;">
+        <div class="cmdr-section">
             <span>Commander Damage</span>
-            <div class="cmdr-damg-bttns" style="display: flex; justify-content: center; align-items: center; gap: 15px;">
-                <button onclick="updateCmdr(${id}, -1)" style="padding: 5px 10px;">-</button>
-                <b id="cmdr-${id}" style="font-size: 2rem;">0</b>
-                <button onclick="updateCmdr(${id}, 1)" style="padding: 5px 10px;">+</button>
+            <div class="cmdr-damg-bttns">
+                <button onclick="updateCmdr(${id}, -1)">-</button>
+                <b id="cmdr-${id}" class="cmdr-count">0</b>
+                <button onclick="updateCmdr(${id}, 1)">+</button>
             </div>
         </div>
-    `;
-
-    document.getElementById('button-hover-style').innerHTML = `
-        .cmdr-damg-bttns button:hover{
-            cursor: pointer;
-        }
     `;
 
     grid.appendChild(card);

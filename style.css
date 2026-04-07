@@ -15,7 +15,7 @@
     --accent: #d7fffe;
 }
 html{
-    font-size: 62.5%; /*This is like a universal constant for 1px*/                                                                                             
+    font-size: 62.5%; /*This is like a universal constant for 1px*/
 }
 
 body{
@@ -25,9 +25,8 @@ body{
     font-family: 'DM Sans', sans-serif;
     min-height: 100vh;
     display: flex;
-    padding-bottom: 8rem;
+    padding-bottom: 1.5rem;                                                                       /*Maybe change later*/
 }
-
 #main-app-section{
     max-width: 180rem;
     margin: 0 auto;
@@ -38,75 +37,65 @@ body{
     animation: fadeIn 1.5s ease-out;
 }
 
-/* Clock section */
-#clock-section{
-    text-align: center;
-    padding: 4rem 0 2rem;
-}
-
-#time{
-    font-family: 'DM Serif Display', serif;
-    font-size: 30rem;
-    line-height: .8;
-    letter-spacing: -.2rem;
-    color: var(--text-primary);
-}
-
-#date{
-    font-size: 7rem;
-    font-weight: 300;
-    color: var(--text-secondary);
-    margin-top: 1.2rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-}
-
-/* Widgets grid */
-#widgets{
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
-    gap: 4rem;
-    max-width: 160rem; /* Increased from 140rem */
-    margin: 0 auto;
-}
-
 @keyframes fadeIn{
     from { opacity: 0; transform: translateY(1rem); }
     to { opacity: 1; transform: translateY(0); }
 }
-
+/*========================================= Clock Widget =========================================*/
+#clock-section{
+    text-align: center;
+    padding-top: 1.5rem;
+}
+#time{
+    font-family: 'DM Serif Display', serif;
+    font-size: 18rem;
+    line-height: .8;
+    letter-spacing: -.2rem;
+    color: var(--text-primary);
+}
+#date{
+    font-size: 4rem;
+    font-weight: 300;
+    color: var(--text-secondary);
+    margin-top: 1rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+/*========================================= Widget Grid =========================================*/
+#widgets{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
+    gap: 2rem;
+    max-width: 120rem;
+    margin: 0 auto;
+}
 .widget{
     background: var(--widget-bg);
     border: .1rem solid var(--widget-border);
     border-radius: 2rem;
     padding: 5rem;
-    min-height: 50rem;
+    min-height: 32rem;
     
-
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-
 .widget:hover{
     transform: translateY(-.5rem);
     box-shadow: 0 1rem 2rem rgba(0,0,0,0.05);
 }
-
 /*========================================= Current Weather Widget =========================================*/
 #weather-widget{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 3rem;
+    padding: 2rem;
 }
-
-.weather-header p {
-    font-size: 2.2rem !important;
+.weather-header p{
+    font-size: 1.5rem !important;
     color: var(--text-secondary);
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    margin-bottom: 2rem;
+    margin-bottom: 1.3rem;
 }
-
 /* Big Temperature */
 .weather-main{
     display: flex;
@@ -114,25 +103,21 @@ body{
     gap: 2rem;
     margin-bottom: 3rem;
 }
-
 .main-temp{
     font-family: 'DM Serif Display';
-    font-size: 13rem;
+    font-size: 8rem;
     line-height: 1;
 }
-
 .main-desc{
     display: flex;
     flex-direction: column;
 }
-
 .condition-text{
-    font-size: 3.8rem;
+    font-size: 2rem;
     font-weight: 500;
 }
-
 .high-low{
-    font-size: 2rem;
+    font-size: 1.5rem;
     color: var(--text-secondary);
 }
 
@@ -140,40 +125,68 @@ body{
 .weather-grid{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    border-top: 1px solid var(--widget-border);
-    padding-top: 2rem;
+    border-top: .1rem solid var(--widget-border);
+    padding-top: 1rem;
     gap: 1rem;
 }
-
 .stat-item{
     display: flex;
     flex-direction: column;
 }
 
 .stat-label{
-    font-size: 1.8rem;
+    font-size: 1.3rem;
     color: var(--text-secondary);
     text-transform: uppercase;
     font-weight: 500;
 }
-
 .stat-value{
-    font-size: 3rem;
+    font-size: 2rem;
     font-weight: 400;
 }
-
-.rain-prob .stat-value {
+.rain-prob .stat-value{
     color: #3b82f6; /* Signature blue for rain */
 }
-
+/*========================================= Solar Tracker =========================================*/
+.solar-container{
+    margin-top: 2rem;
+    padding: 1rem 0;
+}
+.solar-labels{
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.4rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+.solar-status{
+    font-family: 'DM Serif Display';
+    color: var(--text-primary);
+    font-size: 1.8rem;
+}
+.solar-track{
+    position: relative;
+    height: 1.2rem;
+    background: #2E3192;
+    background: linear-gradient(90deg,#2e3192 0%, #68347a 3%, #e63946 10%, #ffbf00 20%, #87ceeb 28%, #87ceeb 72%, #ffbf00 80%, #e63946 90%, #68347a 97%, #2e3192 100%);
+    border-radius: 1rem;
+    border: .2rem solid whitesmoke;
+}
+.sun-marker{
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2.2rem;
+    transition: left 1s ease-in-out;
+}
 /*========================================= Forecast Bar =========================================*/
-.dailyWeather {
+.dailyWeather{
     width: 100%;
     display: flex;
     justify-content: center;
     margin-top: 2rem;
 }
-
 #forecast-bar{
     display: flex;
     flex-direction: row; /* Horizontal layout */
@@ -184,177 +197,152 @@ body{
     border: .1rem solid var(--widget-border);
     margin-bottom: -3rem;
     width: 95%;
-    justify-content: center;
+    justify-content: space-around;
 
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-
 #forecast-bar:hover{
     transform: translateY(-.5rem);
     box-shadow: 0 1rem 2rem rgba(0,0,0,0.05);
 }
-
-#forecast-bar #forecast-title{
-    font-family: 'DM Serif Display';
-    font-size: 3.6rem;
-    margin-bottom: -4rem;
-}
-
-.forecast-day {
+.forecast-day{
     align-items: center;
 }
-
 .day-name{
     font-weight: 500;
     text-transform: uppercase;
-    font-size: 3.5rem;
+    font-size: 2rem;
     color: var(--text-secondary);
     margin-bottom: -1rem;
 }
-
 .day-temp{
-    font-size: 2.5rem;
+    font-size: 1.5rem;
     font-weight: 400;
     margin-bottom: -.5rem;
     display: block;
 }
-
 .day-rain{
-    font-size: 2rem;
+    font-size: 1.3rem;
     display: block;
+    color: #3b82f6;
+    margin-top: .2rem;
 }
-
 /*========================================= Shuttle Widget =========================================*/
 #shuttle-routes-widget p{
-    font-size: 2.2rem;
+    font-size: 1.5rem;
     color: var(--text-secondary);
     margin-bottom: 1rem;
 }
 #shuttle-routes-widget div{
-    font-size: 4rem;
+    font-size: 3rem;
     font-family: 'DM Serif Display';
     line-height: 1;
 }
 #shuttle-routes-widget #next-shuttle{
-    font-size: 3rem;
+    font-size: 2rem;
     color: var(--text-secondary);
     margin-top: 1rem;
     font-family: 'DM Serif Display';
 }
-
 /*========================================= Parking Widget =========================================*/
 #ucf-parking-widget{
     padding: 0;
 }
 #parking-title{
-    padding: 2.5rem 2.5rem 0 2rem;
-    font-size: 2.5rem !important;
+    padding: 2rem 2.5rem 0 2rem;
+    font-size: 1.5rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: var(--text-secondary);
-}
-#ucf-parking-widget #parking-title{
-    font-size: 2.2rem;
-    color: var(--text-secondary);
-    margin-bottom: 2rem;
+    margin-bottom: .8rem;
 }
 #parking-list{
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    width: 58rem;
-    height: 35rem;
+    width: 46rem;
+    height: 28rem;
     justify-self: center;
     margin: 0 1rem;
     padding: 1rem;
+    gap: 1rem;
 }
 .garage-info{
     margin-bottom: 2.5rem;
     background-color: var(--accent);
-    width: 18rem;
+    width: 14rem;
+    height: 10.5rem;
     padding: 0 1rem;
     border-radius: 1rem;
     box-shadow: .5rem .3rem rgba(0, 0, 0, 0.12);
 }
-
 .garage-name{
     font-family: 'DM Serif Display';
-    font-size: 3.8rem;
+    font-size: 2.8rem;
+    display: block;
 }
-
+.garage-percentage-bar{
+    background-color: gainsboro;
+    width: 100%;
+    height: .5rem;
+    border-style: inset;
+    border-color: rgb(218, 218, 218);
+    border-width: 0 .2rem .2rem .2rem;
+}
 .garage-percent{
     font-family: 'DM Serif Display';
-    font-size: 3.8rem;
+    font-size: 2.6rem;
 }
-
 .spots-left{
-    font-size: 1.6rem;
+    font-size: 1.2rem;
     color: var(--text-secondary);
     margin-top: 0.5rem;
 }
-/*========================================= Solar Tracker =========================================*/
-.solar-container {
-    margin-top: 2rem;
-    padding: 1rem 0;
-}
-
-.solar-labels {
-    display: flex;
-    justify-content: space-between;
-    font-size: 1.4rem;
-    color: var(--text-secondary);
-    margin-bottom: 1rem;
-    font-weight: 500;
-}
-
-.solar-status {
-    font-family: 'DM Serif Display';
-    color: var(--text-primary);
-    font-size: 1.8rem;
-}
-
-.solar-track{
-    position: relative;
-    height: 1.2rem;
-    background: linear-gradient(to right, #ff9c2a, #ffffff, rgb(44, 44, 255));
-    border-radius: 1rem;
-    border: .2rem solid whitesmoke;
-}
-
-.solar-progress{
-    height: 100%;
-    background: var(--text-primary);
-    opacity: 0.2;
-    border-radius: 1rem;
-}
-
-.sun-marker{
+/*========================================= System Stats Widget =========================================*/
+.system-link-wrapper{
     position: absolute;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 2.2rem;
-    transition: left 1s ease-in-out;
+    right: 3rem;
+    top: 3rem;
+    text-decoration: none;
+    z-index: 100; /* Keeps it above other elements */
+
+}
+.system-icon{
+    width: 4.5rem;
+    height: 4.5rem;
+    background-color: #00d4ff;
+    border-radius: 1.5rem;
+    background-image: url('images/chip-icon.png'); 
+    background-size: 60%;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: transform 0.3s ease;
+
+    animation: fadeIn 1.5s ease-out;
+}
+.system-icon:hover{
+     transform: translateY(-.5rem);
 }
 /*========================================= Magic Counter Widget =========================================*/
 .magic-link-wrapper{
-    text-decoration: none;
-    display: block; /* Ensures it takes up space */
     position: absolute;
+    left: 3rem;
+    top: 3rem;
+    text-decoration: none;
     z-index: 100; /* Keeps it above other elements */
 }
 .magic-life-counter{
-    background-image: url(images/mtg-icon.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
+    width: 4.5rem;
+    height: 4.5rem;
     background-color: var(--text-primary);
-    height: 7rem;
-    width: 7rem;
     border-radius: 1.5rem;
-    margin-left: 3rem;
-    margin-top: 3rem;
+    background-image: url('images/mtg-icon.png'); 
+    background-size: 120%;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: transform 0.3s ease;
 
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: fadeIn 1.5s ease-out;
 }
 .magic-life-counter:hover{
     cursor: pointer;
@@ -364,26 +352,3 @@ body{
 .magic-life-counter:active{
     opacity: .85;
 }
-
-/*========================================= System Stats Widget =========================================*/
-.system-link-wrapper {
-    position: absolute;
-    right: 3rem;
-    top: 3rem;
-    text-decoration: none;
-}
-
-.system-icon {
-    width: 7rem;
-    height: 7rem;
-    background-color: #00d4ff;
-    border-radius: 1.5rem;
-    /* Use a terminal or chip icon here */
-    background-image: url('images/chip-icon.png'); 
-    background-size: 60%;
-    background-position: center;
-    background-repeat: no-repeat;
-    transition: transform 0.3s ease;
-}
-
-.system-icon:hover { transform: translateY(-.5rem); }
