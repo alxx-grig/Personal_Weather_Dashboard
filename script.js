@@ -103,7 +103,7 @@ async function getWeather(){ // async is a keyword that is used when we don't re
                 <div class="main-desc">
                     <span class="condition-text">${description}</span>
                     <span class="high-low">High: ${Math.round(dailyWeather.temperature_2m_max[0])}° • Low: ${Math.round(dailyWeather.temperature_2m_min[0])}°</span>
-                    
+                    <span class="last-Updated" id="last-updated-weather">Last Updated: ${lastUpdatedTime()}</span>
                 </div>
             </div>
             <div class="weather-grid">
@@ -195,6 +195,7 @@ async function getShuttleData(){
                         ${getDisplayTime(nextEntry)}
                     </div>
                     ${secondBusHTML}
+                    <span class="last-updated" id="last-updated-shuttle">Last Updated: ${lastUpdatedTime()}</span>
                 `;
             }
             // If nextEntry doesn't exist
@@ -202,6 +203,7 @@ async function getShuttleData(){
                 document.getElementById('shuttle-routes-widget').innerHTML = `
                     <p>Route 2 @ Boardwalk Stop</p>
                     <p style="margin-top: 1rem;">Checking for next bus...</p>
+                    <span class="last-updated" id="last-updated-shuttle">Last Updated: ${lastUpdatedTime()}</span>
                 `;
             }
         }
@@ -263,6 +265,7 @@ async function getParkingData() {
 
         document.getElementById('ucf-parking-widget').innerHTML = `
             <p id="parking-title">Main Campus Parking</p>
+            <span class="last-ppdated" id="last-updated-parking">Last Updated: ${lastUpdatedTime()}</span>
             <div id="parking-list">
                 ${mostGaragesHTML}
             </div>
@@ -313,7 +316,7 @@ function updateSolarTracker(data){
 
 /*========================================================== Auxiliary Functions ==========================================================*/
 
-function getUpdateTime(){
+function lastUpdatedTime(){
     const lastUpdated = new Date(); // To see when we last updated the weather
 
     let hours = lastUpdated.getHours(); // .padStart() function adds whatever character is specified at the beginning of the string if it doesn't have the required number of characters: in this case 2
@@ -322,7 +325,7 @@ function getUpdateTime(){
     const ampm = hours >= 12 ? 'PM' : 'AM';
     hours = hours % 12 || 12;
 
-    return `<span class="last-weather-update">Last Updated: ${hours}:${minutes} ${ampm}</span>`;
+    return `${hours}:${minutes} ${ampm}</span>`;
 }
 
 

@@ -44,7 +44,7 @@ body{
 /*========================================= Clock Widget =========================================*/
 #clock-section{
     text-align: center;
-    padding-top: 1.5rem;
+    padding-top: .4rem;
 }
 #time{
     font-family: 'DM Serif Display', serif;
@@ -146,6 +146,9 @@ body{
 }
 .rain-prob .stat-value{
     color: #3b82f6; /* Signature blue for rain */
+}
+#last-updated-weather{
+    margin-top: .6rem;
 }
 /*========================================= Solar Tracker =========================================*/
 .solar-container{
@@ -254,7 +257,7 @@ body{
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: var(--text-secondary);
-    margin-bottom: .8rem;
+    margin-bottom: -1rem;
 }
 #parking-list{
     display: flex;
@@ -297,6 +300,11 @@ body{
     font-size: 1.2rem;
     color: var(--text-secondary);
     margin-top: 0.5rem;
+}
+#last-updated-parking{
+    position: relative;
+    bottom: .8rem;
+    left: 70%;
 }
 /*========================================= System Stats Widget =========================================*/
 .system-link-wrapper{
