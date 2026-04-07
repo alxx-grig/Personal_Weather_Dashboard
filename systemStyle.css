@@ -38,6 +38,9 @@ body{
     text-transform: uppercase;
     letter-spacing: 2px;
 }
+.back-btn:hover{
+    cursor: pointer;
+}
 /*========================================= Stats Grid =========================================*/
 .stats-grid{
     display: grid;

@@ -9,7 +9,7 @@ async function updateStats() {
         document.getElementById('ram-val').innerText = `${data.ramUsed}MB`;
         document.getElementById('ram-fill').style.width = `${Math.min((data.ramUsed / data.ramTotal) * 100, 100)}%`;
         
-        document.getElementById('temp-val').innerText = `${data.temp}°C`;
+        document.getElementById('temp-val').innerText = `${(data.temp * (9/5) + 32).toFixed(1)}°F`;
         document.getElementById('uptime-val').innerText = data.uptime;
 
         if (data.disk && data.disk.percent !== 'N/A') {

@@ -103,7 +103,7 @@ async function getWeather(){ // async is a keyword that is used when we don't re
                 <div class="main-desc">
                     <span class="condition-text">${description}</span>
                     <span class="high-low">High: ${Math.round(dailyWeather.temperature_2m_max[0])}° • Low: ${Math.round(dailyWeather.temperature_2m_min[0])}°</span>
-                    <span class="last-Updated" id="last-updated-weather">Last Updated: ${lastUpdatedTime()}</span>
+                    <span class="last-updated" id="last-updated-weather">Last Updated: ${lastUpdatedTime()}</span>
                 </div>
             </div>
             <div class="weather-grid">
@@ -190,7 +190,8 @@ async function getShuttleData(){
 
                 // Injecting the HTML into the shuttle-routes-widget
                 document.getElementById('shuttle-routes-widget').innerHTML = `
-                    <p>Route 2 @ Boardwalk Stop</p>
+                    <p id="shuttle-widget-title">Shuttle Route</p>
+                    <p id="route-title">Route 2 @ Boardwalk Stop</p>
                     <div>
                         ${getDisplayTime(nextEntry)}
                     </div>
@@ -202,7 +203,7 @@ async function getShuttleData(){
             else{
                 document.getElementById('shuttle-routes-widget').innerHTML = `
                     <p>Route 2 @ Boardwalk Stop</p>
-                    <p style="margin-top: 1rem;">Checking for next bus...</p>
+                    <p style="margin-top: 1rem;">No Operational Shuttles</p>
                     <span class="last-updated" id="last-updated-shuttle">Last Updated: ${lastUpdatedTime()}</span>
                 `;
             }
@@ -248,7 +249,7 @@ async function getParkingData() {
 
             return `
                 <div class="garage-info" style="text-align: center;">
-                    <div class="garage-percentage-bar" style="background-color: ${statusColor}"></div>
+                    <div class="garage-percentage-bar" style="background-color: ${statusColor}; box-shadow: 0 0 .3rem ${statusColor};"></div>
                     <span class="garage-name">${name}</span>
                     <span class="garage-percent">${percent}% Full</span>
                     <p class="spots-left">${available} spots remaining</p>
@@ -265,7 +266,7 @@ async function getParkingData() {
 
         document.getElementById('ucf-parking-widget').innerHTML = `
             <p id="parking-title">Main Campus Parking</p>
-            <span class="last-ppdated" id="last-updated-parking">Last Updated: ${lastUpdatedTime()}</span>
+            <span class="last-updated" id="last-updated-parking">Last Updated: ${lastUpdatedTime()}</span>
             <div id="parking-list">
                 ${mostGaragesHTML}
             </div>

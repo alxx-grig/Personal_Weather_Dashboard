@@ -108,7 +108,7 @@ const server = http.createServer((req, res) => {
         return res.end(JSON.stringify({ error: 'Route not found. Use /shuttle, /parking, /system, or /weather' }));
     }
 
-    // Only /shuttle and /parking reach this point
+    // Only /shuttle, /parking, and /weather reach this point
     https.get(targetUrl, (apiRes) => {
         let body = '';
         apiRes.on('data', chunk => body += chunk);
