@@ -8,13 +8,25 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <a href="magicCounter.html" class="magic-link-wrapper">
-      <div class="magic-life-counter" title="Open MTG Life Counter"></div>
-    </a>
+    <div id="menu-toggle" class="menu-button" onclick="toggleMenu()">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
 
-    <a href="system.html" class="system-link-wrapper">
-      <div class="system-icon" title="View System Stats"></div>
-    </a>
+    <div class="side-menu" id="side-menu">
+      <a href="magicCounter.html" class="menu-item-wrapper">
+        <div class="menu-item-icon magic-menu-icon"></div>
+        <span>MTG Counter</span>
+      </a>
+
+      <a href="system.html" class="menu-item-wrapper">
+        <div class="menu-item-icon system-menu-icon"></div>
+        <span>System Monitoring</span>
+      </a>
+    </div>
+
+    
     
     <div id="main-app-section">
       <header id="clock-section">

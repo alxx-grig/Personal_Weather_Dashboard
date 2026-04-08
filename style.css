@@ -325,62 +325,106 @@ body{
     bottom: .6rem;
     left: 70%;
 }
-/*========================================= System Stats Widget =========================================*/
-.system-link-wrapper{
-    position: absolute;
-    right: 3rem;
+/*========================================= App Menu =========================================*/
+/* Menu Button*/
+.menu-button{
+    position: fixed;
     top: 3rem;
-    text-decoration: none;
-    z-index: 100; /* Keeps it above other elements */
-
-}
-.system-icon{
-    width: 4.5rem;
-    height: 4.5rem;
-    background-color: #00d4ff;
-    border-radius: 1.5rem;
-    background-image: url('images/chip-icon.png'); 
-    background-size: 60%;
-    background-position: center;
-    background-repeat: no-repeat;
-    transition: transform 0.3s ease;
-
-    animation: fadeIn 1.5s ease-out;
-}
-.system-icon:hover{
-     transform: translateY(-.5rem);
-}
-.system-icon:active{
-    opacity: .85;
-}
-/*========================================= Menu Icon =========================================*/
-
-/*========================================= Magic Counter Widget =========================================*/
-.magic-link-wrapper{
-    position: absolute;
     left: 3rem;
-    top: 3rem;
-    text-decoration: none;
-    z-index: 100; /* Keeps it above other elements */
-}
-.magic-life-counter{
-    width: 4.5rem;
-    height: 4.5rem;
-    background-color: var(--text-primary);
-    border-radius: 1.5rem;
-    background-image: url('images/mtg-icon.png'); 
-    background-size: 120%;
-    background-position: center;
-    background-repeat: no-repeat;
-    transition: transform 0.3s ease;
-
-    animation: fadeIn 1.5s ease-out;
-}
-.magic-life-counter:hover{
+    z-index: 1001;
     cursor: pointer;
-    transform: translateY(-.5rem);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+    background: var(--widget-bg);
+    border-radius: 1rem;
+    border: 0.1rem solid var(--widget-border);
+    transition: box-shadow 0.3s ease;
+}
+.menu-button:hover{
     box-shadow: 0 1rem 2rem rgba(0,0,0,0.05);
 }
-.magic-life-counter:active{
+
+.bar{
+    width: 2.5rem;
+    height: 0.3rem;
+    background-color: var(--text-primary);
+    transition: 0.3s;
+    border-radius: .5rem;
+}
+
+/* Side Menu Container */
+.side-menu{
+    position: fixed;
+    top: 0;
+    left: -30rem;
+    width: 22rem;
+    height: 100%;
+    background-color: var(--widget-bg);
+    border-right: 0.1rem solid var(--widget-border);
+    z-index: 1000;
+    padding: 8rem 1rem 1rem 1.7rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.side-menu.active{
+    transform: translateX(30rem);
+}
+
+/* Menu Items */
+.menu-item-wrapper{
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem 1.5rem;
+    border-radius: 1.5rem;
+    transition: background 0.2s;
+}
+.menu-item-wrapper span{
+    font-size: 1.6rem;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+.menu-item-wrapper:hover{
+    background: var(--bg);
+}
+.menu-item-wrapper:active{
     opacity: .85;
+}
+
+/* Menu item icons */
+.menu-item-icon{
+    width: 4rem;
+    height: 4rem;
+    border-radius: 1.2rem;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    flex-shrink: 0;
+}
+.magic-menu-icon{
+    background-color: var(--text-primary);
+    background-image: url('images/mtg-icon.png');
+    background-size: 120%;
+}
+.system-menu-icon{
+    background-color: #00d4ff;
+    background-image: url('images/chip-icon.png');
+    background-size: 60%;
+}
+
+/* Rotate hamburger to X when active because it's cool*/
+.menu-button.active .bar:nth-child(1){
+    transform: translateY(0.8rem) rotate(45deg);
+}
+.menu-button.active .bar:nth-child(2){
+    opacity: 0;
+}
+.menu-button.active .bar:nth-child(3){
+    transform: translateY(-0.8rem) rotate(-45deg);
 }

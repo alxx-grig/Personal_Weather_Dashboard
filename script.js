@@ -326,9 +326,25 @@ function lastUpdatedTime(){
     const ampm = hours >= 12 ? 'PM' : 'AM';
     hours = hours % 12 || 12;
 
-    return `${hours}:${minutes} ${ampm}</span>`;
+    return `${hours}:${minutes} ${ampm}`;
 }
 
+function toggleMenu(){
+    const menu = document.getElementById('side-menu');
+    const button = document.getElementById('menu-toggle');
+    
+    menu.classList.toggle('active');
+    button.classList.toggle('active');
+}
+
+// Close menu if user clicks outside of it
+document.addEventListener('click', (e) => {
+    const menu = document.getElementById('side-menu');
+    const button = document.getElementById('menu-toggle');
+    if(!menu.contains(e.target) && !button.contains(e.target) && menu.classList.contains('active')){
+        toggleMenu();
+    }
+});
 
 // Run the functions!
 updateClock();
