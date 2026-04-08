@@ -1,5 +1,5 @@
 async function updateStats() {
-    try {
+    try{
         const res = await fetch('http://localhost:3001/system');
         const data = await res.json();
         
@@ -12,19 +12,19 @@ async function updateStats() {
         document.getElementById('temp-val').innerText = `${(data.temp * (9/5) + 32).toFixed(1)}°F`;
         document.getElementById('uptime-val').innerText = data.uptime;
 
-        if (data.disk && data.disk.percent !== 'N/A') {
+        if(data.disk && data.disk.percent !== 'N/A'){
             const diskPercent = parseInt(data.disk.percent);
             document.getElementById('disk-val').innerText = data.disk.percent;
             document.getElementById('disk-fill').style.width = data.disk.percent;
             document.getElementById('disk-detail').innerText = `${data.disk.used} USED / ${data.disk.total} TOTAL`;
 
-            if (diskPercent >= 90) {
+            if(diskPercent >= 90){
                 document.getElementById('disk-fill').classList.remove('fill-orange');
                 document.getElementById('disk-fill').classList.add('fill-red');
             }
         }
 
-        if (data.throttled && data.throttled.status !== 'N/A') {
+        if(data.throttled && data.throttled.status !== 'N/A'){
             const isHealthy = data.throttled.status === 'HEALTHY';
             const throttleEl = document.getElementById('throttle-val');
             throttleEl.innerText = data.throttled.status;
@@ -36,12 +36,13 @@ async function updateStats() {
 
         document.getElementById('ip-val').innerText = data.ip;
 
-    } catch (e) { 
+    }
+    catch (e){ 
         console.error("Connection to Node.js backend failed.");
         ['cpu-val','ram-val','temp-val','uptime-val','disk-val','throttle-val','ip-val']
             .forEach(id => {
                 const el = document.getElementById(id);
-                if (el) el.classList.add('status-offline');
+                if(el) el.classList.add('status-offline');
             });
     }
 }
