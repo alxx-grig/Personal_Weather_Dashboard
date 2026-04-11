@@ -2,8 +2,27 @@ const http = require('http');
 const https = require('https');
 const os = require('os');
 const { exec } = require('child_process');
+const fs = require('fs');
+const path = require('path');
 
 const server = http.createServer((req, res) => {
+    const apiRoutes = ['/shuttle', '/parking', '/weather', '/system'];
+    const ext = path.extname(req.url).toLowerCase();
+
+    if (!apiRoutes.includes(req.url) && (ext !== '' || req.url === '/')) {
+        const filePath = path.join(__dirname, req.url === '/' ? 'index.html' : req.url);
+        const mimeTypes = {
+            '.html': 'text/html', '.css': 'text/css', '.js': 'application/javascript',
+            '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg',
+            '.gif': 'image/gif', '.ico': 'image/x-icon', '.mp3': 'audio/mpeg', '.wav': 'audio/wav'
+        };
+        fs.readFile(filePath, (err, data) => {
+            if (err) { res.writeHead(404); return res.end('Not found'); }
+            res.writeHead(200, { 'Content-Type': mimeTypes[ext] || 'text/plain' });
+            res.end(data);
+        });
+        return;
+    }
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Content-Type', 'application/json');
 
