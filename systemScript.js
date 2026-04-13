@@ -36,6 +36,14 @@ async function updateStats() {
 
         document.getElementById('ip-val').innerText = data.ip;
 
+        if(data.wifi){
+            const wifiEl = document.getElementById('wifi-val');
+            wifiEl.innerText = data.wifi.connected ? 'CONNECTED' : 'OFFLINE';
+            wifiEl.classList.add(data.wifi.connected ? 'status-healthy' : 'status-warning');
+            document.getElementById('wifi-ssid').innerText = `SSID: ${data.wifi.ssid}`;
+            document.getElementById('wifi-quality').innerText = `SIGNAL: ${data.wifi.quality}`;
+        }
+
     }
     catch (e){ 
         console.error("Connection to Node.js backend failed.");

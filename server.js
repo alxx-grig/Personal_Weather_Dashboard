@@ -57,7 +57,7 @@ const server = http.createServer((req, res) => {
 
         // Run all exec commands in parallel using a counter
         let results = {};
-        let pending = 3;
+        let pending = 4;
 
         const done = () => {
             if(--pending === 0){
@@ -69,7 +69,8 @@ const server = http.createServer((req, res) => {
                     uptime: Math.round(os.uptime() / 3600) + ' hours',
                     disk: results.disk || 'N/A',
                     throttled: results.throttled || 'N/A',
-                    ip: localIP
+                    ip: localIP,
+                    wifi: results.wifi
                 };
                 res.end(JSON.stringify(stats));
             }
@@ -115,6 +116,22 @@ const server = http.createServer((req, res) => {
             }
             else{
                 results.throttled = { status: 'N/A', code: 'N/A', detail: 'vcgencmd unavailable' };
+            }
+            done();
+        });
+
+        // WiFi Status
+        exec("iwconfig wlan0 2>/dev/null | grep 'ESSID'", (err, stdout) => {
+            if (stdout && !stdout.includes('off/any')) {
+                const ssid = stdout.match(/ESSID:"(.+?)"/);
+                const quality = stdout.match(/Link Quality=(\d+)\/(\d+)/);
+                results.wifi = {
+                    connected: true,
+                    ssid: ssid ? ssid[1] : 'Unknown',
+                    quality: quality ? Math.round((parseInt(quality[1]) / parseInt(quality[2])) * 100) + '%' : 'N/A'
+                };
+            } else {
+                results.wifi = { connected: false, ssid: 'Not connected', quality: 'N/A' };
             }
             done();
         });
